@@ -32,11 +32,16 @@ LABEL summary="$SUMMARY" \
 EXPOSE 8080
 EXPOSE 8443
 
-RUN yum install -y yum-utils && \
+
+RUN yum update -y && \
+    yum install -y python3-pip && \
+    yum install -y yum-utils && \
     yum install -y centos-release-scl epel-release && \
     INSTALL_PKGS="gettext hostname nss_wrapper bind-utils httpd24 httpd24-mod_ssl httpd24-mod_ldap httpd24-mod_session httpd24-mod_auth_mellon httpd24-mod_security openssl" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
+    pip3 install --upgrade pip && \
     rpm -V $INSTALL_PKGS && \
+    
     yum -y clean all --enablerepo='*'
 
 ENV HTTPD_CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/httpd/ \
