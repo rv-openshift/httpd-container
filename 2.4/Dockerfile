@@ -40,9 +40,9 @@ RUN yum update -y && \
     INSTALL_PKGS="gettext hostname nss_wrapper bind-utils httpd24 httpd24-mod_ssl httpd24-mod_ldap httpd24-mod_session httpd24-mod_auth_mellon httpd24-mod_security openssl" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     pip3 install --upgrade pip && \
-    rpm -V $INSTALL_PKGS && \
-    
-    yum -y clean all --enablerepo='*'
+    rpm -V $INSTALL_PKGS && \        
+    yum -y clean all --enablerepo='*' && \
+    rm -rf /var/cache/yum
 
 ENV HTTPD_CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/httpd/ \
     HTTPD_APP_ROOT=${APP_ROOT} \
